@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro">
+    <title>Vue.js practice</title>
+
+</head>
+<body>
+    <div id="myapp1">
+    <h1>CHAPTER1 Vue.jsとフレームワークの基礎知識</h1>
+    <section>
+        <h2>section04 Vue.jsのインストール</h2>
+        <p>学習用ファイルのひな型</p>
+
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:1">
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ja&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+    &lt;title&gt;Vue.js practice&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;myapp&quot;&gt;
+        &lt;!-- ここにテンプレートを書き込んでいく --&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Vue.jsのインストール --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1">
+var myapp = new Vue({
+    // マウントする要素
+    el: &#039;#myapp&#039;,
+    
+    // アプリケーションで使用するデータ
+    data: {
+
+    },
+    
+    // アプリケーションで使用するメソッド
+    methods: {
+
+    },
+    
+    // 算出プロパティ。関数で処理された結果をデータとして返す
+    computed: {
+        
+    },
+    
+    // ライフサイクルフック。特定のタイミングで自動的に呼び出される関数
+    created: function() {
+        // 他にもbeforeCreate, beforeMount, mounted, beforeUpdate, updated, beforeDestroy, destroyed, errorCaptured
+    },
+})
+</pre>
+
+        <h2>section05 Vue.jsの基本機能</h2>
+            <h3>テキストバインディング</h3>
+            <section>
+
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;div id=&quot;myapp&quot; v-pre&gt;
+        &lt;p&gt;<span v-pre>{{ myMessage }}</span>&lt;/p&gt;
+    &lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1">
+var app = new Vue({
+    el: &#039;#myapp&#039;,
+    data: {
+        myMessage: &#039;Hello, Vue.js&#039;
+    }
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <div id="myapp">
+                        <p>{{ myMessage }}</p>
+                    </div>
+                </div>
+            </section>
+    
+            <h3>繰り返しの描画</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;ol&gt;
+        &lt;li v-for=&quot;item in mylist&quot;&gt;{{ item }}&lt;/li&gt;
+    &lt;/ol&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        mylist: [&#039;りんご&#039;,&#039;ばなな&#039;,&#039;いちご&#039;]
+    }
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <ol>
+                        <li v-for="item in mylist">{{ item }}</li>
+                    </ol>
+                </div>
+
+            </section>
+
+            <h3>イベントの利用</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;button v-on:click=&quot;myhandleClick&quot;&gt;Click&lt;/button&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        myhandleClick: function(event) {
+            alert(event.target)
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myhandleClick">Click</button>
+                </div>
+            </section>
+
+            <h3>フォーム入力の同期</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input v-model=&quot;myformtext&quot;&gt;
+    &lt;p&gt;<span v-pre>{{ myformtext }}</span>&lt;/p&gt;
+    &lt;input v-model.number=&quot;mynumber1&quot;&gt;+&lt;input v-model.number=&quot;mynumber2&quot;&gt;=<span v-pre>{{ mynumber1+mynumber2 }}</span>
+        &lt;!-- .numberをつけると数値として取得 --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myformtext: &#039;ここの文字列が同期&#039;,
+        mynumber1: 2,
+        mynumber2: 3,
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-model="myformtext">
+                    <p>{{ myformtext}}</p>
+                    <input v-model.number="mynumber1">+<input v-model.number="mynumber2">={{mynumber1+mynumber2}}
+                </div>
+            </section>
+
+            <h3>条件分岐</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p v-if=&quot;myShowFlag&quot;&gt;myShowFlagプロパティがfalseのときコメントアウト&lt;/p&gt;
+    &lt;p v-show=&quot;myShowFlag&quot;&gt;myShowFlagプロパティがfalseのときstyle=&quot;display: none;&quot;&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myShowFlag: true,
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p><button v-on:click="myShowFlag=!myShowFlag">T/F切替</button>
+                    <p v-if="myShowFlag">myShowFlagプロパティがfalseのときコメントアウト</p>
+                    <p v-show="myShowFlag">myShowFlagプロパティがfalseのときstyle="display: none;"</p>
+                </div>
+            </section>
+
+            <h3>トランジション＆アニメーション</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;button v-on:click=&quot;myShowFlag=!myShowFlag&quot;&gt;切り替え&lt;/button&gt;
+    &lt;transition&gt;
+        &lt;p v-if=&quot;myTransithion&quot;&gt;表示非表示を切り替えるときにアニメーション&lt;/p&gt;
+    &lt;/transition&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myTransition: true,
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1">
+.v-enter-active, .v-leave-active {
+    transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+    opacity: 0;
+}
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myTransition=!myTransition">切り替え</button>
+                    <transition>
+                        <p v-if="myTransition">表示非表示を切り替えるときにアニメーション</p>
+                    </transition>
+                </div>
+            </section>
+
+        </section>
+    </div>
+
+
+
+    <div id="myapp2">
+
+        <h1>CHAPTER2 データの登録と更新</h1>
+        <section>
+
+            <h2>SECTION8 テキストと属性のデータバインディング</h2>
+            <h3>テキストのデータバインディング</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p&gt;<span v-pre>{{ myMessage.value }}</span>&lt;/p&gt;
+    &lt;p&gt;<span v-pre>{{ myMessage.value.length }}</span>&lt;/p&gt;&lt;!-- .lengthで文字列長を取得 --&gt;
+    &lt;p&gt;<span v-pre>{{ mylist[mynum1] }}</span>&lt;/p&gt;&lt;!-- 配列の番号をmynumプロパティで指定 --&gt;
+    &lt;p&gt;<span v-pre>{{ mynum1 + mynum2 }}</span>&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myMessage: {
+            value: 'Hell Vue.js!'
+        },
+        myList: ['html', 'javascript', 'jquery', 'vuejs'],
+        mynum: 2,
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <p>{{ myMessage.value }}</p>
+                    <p>{{ myMessage.value.length }}</p>
+                    <p>{{ myList[mynum1] }}</p>
+                    <p>{{ mynum1+mynum2 }}</p>
+                </div>
+            </section>
+    
+            <h3>属性のデータバインディング</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input v-bind:value=&quot;myBindValue&quot;&gt;&lt;!-- ｛｛  ｝｝は使わない --&gt;
+    &lt;input :value=&quot;myBindValue&quot;&gt;&lt;!-- v-bind は省略可 --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myBindValue: 'テキスト文字列',
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <input v-bind:value="myBindValue"><br>
+                        <input :value="myBindValue">
+                    </div>
+                </section>
+        
+                <h3>データの更新</h3>
+                <section>
+    <h6 class="pre-kind">index.html</h6>
+    <pre class="prettyprint linenums:10">
+        &lt;p&gt;<span v-pre>{{ myCount }}</span>回クリックしました&lt;/p&gt;
+        &lt;button v-on:click=&quot;myIncrement&quot;&gt;myCountを増やす&lt;/button&gt;
+    </pre>
+    <h6 class="pre-kind">main.js</h6>
+    <pre class="prettyprint linenums:3">
+        data: {
+            myCount: 0,
+        },
+        
+        // アプリケーションで使用するメソッド
+        methods: {
+            myIncrement: function() {
+                this.myCount += 1
+            }
+        },
+    </pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <p>{{ myCount }}回クリックしました</p>
+                        <button v-on:click="myIncrement">myCountを増やす</button>
+                    </div>
+                </section>
+
+                <h3>クラスとスタイルのバインディング</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p v-bind:class=&quot;myClassObject&quot;&gt;文字列1&lt;/p&gt;
+    &lt;p v-bind:style=&quot;myStyleObject&quot;&gt;文字列2&lt;/p&gt;
+    &lt;a v-bind=&quot;myItem&quot;&gt;link&lt;/a&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myClassObject: {
+            myClassName1: true,
+            'my-class-name': false, // クラス名でハイフンを含むときは''で囲み記述
+        },
+        myStyleObject: {
+            color: 'red',
+            backgroundColor: 'lightgray', // スタイルのプロパティはハイフンをキャメルケースで表す
+        },
+        myItem: {
+            href: 'https://www.google.com/?hl=ja',
+            name: 'myName',
+            target: '_blank',
+        },
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <p v-bind:class="myClassObject">文字列1&lt;!-- myClassName1 が設定されている --&gt;</p>
+                        <p v-bind:style="myStyleObject">文字列2</p>
+                        <a v-bind="myItem">link</a>
+                    </div>
+                </section>
+
+                <h3>SGVのバインディング</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+        &lt;circle cx=&quot;100&quot; cy=&quot;75&quot; v-bind:r=&quot;myRadius&quot; fill=&quot;red&quot; /&gt;
+    &lt;/svg&gt;
+    &lt;input type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; v-model=&quot;myRadius&quot;&gt;<span v-pre>{{ myRadius }}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myRadius: 50,
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p><br>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <circle cx="100" cy="75" v-bind:r="myRadius" fill="red" />
+                        </svg><br>
+                        <input type="range" min="0" max="100" v-model="myRadius">{{ myRadius }}
+                    </div>
+                </section>
+
+            <h2>SECTION9 テンプレートにおける条件分岐</h2>
+                <h3>v-else-if, v-else によるグループ化</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;div v-if=&quot;myType === &#039;A&#039;&quot; key=&quot;myGroup&quot;&gt;myType は A&lt;/div&gt;
+    &lt;div v-else-if=&quot;myType === &#039;B&#039;&quot; key=&quot;myGroup&quot;&gt;myType は B&lt;/div&gt;
+    &lt;div v-else key=&quot;myGroup&quot;&gt;myType は A,B以外&lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myType: 'B',
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <div v-if="myType === 'A'" key="myGroup">myType は A</div>
+                        <div v-else-if="myType === 'B'" key="myGroup">myType は B</div>
+                        <div v-else key="myGroup">myType は A,B以外</div>
+                    </div>
+                </section>
+
+            <h2>SECTION10 リストデータの表示と更新</h2>
+                <h3>要素を繰り返し描画する</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(item, index) in myTables&quot; v-bind:key=&quot;item.id&quot;&gt;
+            ID: <span v-pre>{{ item.id }}</span>, name: <span v-pre>{{ item.name }}</span>, score: <span v-pre>{{ item.score }}</span>, index: <span v-pre>{{ index }}</span>
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myTables: [
+            {id: 1, name: 'hoge', score: 100 },
+            {id: 2, name: 'fuga', score: 200 },
+            {id: 3, name: 'piyo', score: 500 },
+        ],
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <ul>
+                            <li v-for="(item, index) in myTables" v-bind:key="item.id">
+                                ID: {{item.id}}, name: {{item.name}}, score: {{item.score}}, index: {{index}}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <h3>繰り返し描画しながら、さまざまな条件を適用する</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;ul&gt;&lt;!-- .score が300未満のものだけ描画 --&gt;
+        &lt;li v-for=&quot;item in myTables&quot; v-bind:key=&quot;item.id&quot; v-if=&quot;item.score &lt; 300&quot;&gt;
+        ID: <span v-pre>{{ item.id }}</span>, name: <span v-pre>{{ item.name }}</span>, score: <span v-pre>{{ item.score }}</span>
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myTables: [
+            {id: 1, name: 'hoge', score: 100 },
+            {id: 2, name: 'fuga', score: 200 },
+            {id: 3, name: 'piyo', score: 500 },
+        ],
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <ul>
+                            <li v-for="item in myTables" v-bind:key="item.id" v-if="item.score < 300">
+                                ID: {{item.id}}, name: {{item.name}}, score: {{item.score}}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <h3>リストの更新</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input v-bind:value=&quot;myGoods.name&quot;&gt;
+    &lt;input v-bind:value=&quot;myGoods.score&quot;&gt;
+    &lt;button v-on:click=&quot;myAddGoods&quot;&gt;項目を追加&lt;/button&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;item in myGoodsList&quot; v-bind:key=&quot;item.id&quot;&gt;
+        ID: <span v-pre>{{ item.id }}</span>, name: <span v-pre>{{ item.name }}</span>, score: <span v-pre>{{ item.score }}</span>
+            &lt;button v-on:click=&quot;myRemoveGoods(index)&quot;&gt;削除&lt;/button&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myGoods: {
+            name: &#039;項目名&#039;,
+            score: 289,            
+        },
+        myGoodsList: [
+            {id: 1, name: &#039;hoge&#039;, score: 100 },
+            {id: 2, name: &#039;fuga&#039;, score: 200 },
+            {id: 3, name: &#039;piyo&#039;, score: 500 },
+        ],
+    },
+    // アプリケーションで使用するメソッド
+    methods: {
+        myAddGoods: function() {
+            // IDの最大値を取得
+            var max = this.myGoodsList.reduce(function(a,b) {
+                return a.id > b.id ? a.id : b.id
+            }, 0)
+            //push()で配列にデータを追加
+            this.myGoodsList.push({
+                id: max + 1,
+                name: this.myGoods.name,
+                score: this.myGoods.score,
+            })
+        },
+        myRemoveGoods: function(index) {
+            // spliceで受け取ったindexの位置から1個の要素を削除
+            this.myGoodsList.splice(index, 1)
+        },
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <input v-model="myGoods.name">
+                        <input v-model="myGoods.score">
+                        <button v-on:click="myAddGoods">項目を追加</button>
+                        <ul>
+                            <li v-for="(item, index) in myGoodsList" v-bind:key="item.id">
+                                ID: {{item.id}}, name: {{item.name}}, score: {{item.score}}
+                                <button v-on:click="myRemoveGoods(index)">削除</button>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <h3>オプションにデータを持たないv-for</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;select&gt;&lt;!-- 1～15の数字を繰り返し描画 --&gt;
+        &lt;option v-for=&quot;item in 15&quot;&gt;<span v-pre>{{ item }}</span>&lt;/option&gt;
+    &lt;/select&gt;
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <select>
+                            <option v-for="item in 15">{{ item }}</option>
+                        </select>
+                    </div>
+                </section>
+        
+                <h3>文字列に対するv-for</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;select&gt;&lt;!-- 1～15の数字を繰り返し描画 --&gt;
+        &lt;option v-for=&quot;item in &#039;1文字ずつ別の要素として描画&#039;&quot;&gt;<span v-pre>{{ item }}</span>&lt;/option&gt;
+    &lt;/select&gt;
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <select>
+                            <option v-for="item in '1文字ずつ別の要素として描画'">{{ item }}</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- <h3>外部からデータを取得する</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;select&gt;&lt;!-- 1～15の数字を繰り返し描画 --&gt;
+        &lt;option v-for=&quot;item in &#039;1文字ずつ別の要素として描画&#039;&quot;&gt;｛｛ item ｝｝&lt;/option&gt;
+    &lt;/select&gt;
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <ul>
+                            <li v-for="(item, index) in myJsonData" v-bind:key="item.id">
+                                {{ item.id }}
+                            </li>
+                        </ul>
+                    </div>
+                </section> -->
+
+                <h2>SECTION12 テンプレート制御ディレクティブ</h2>
+                <h3>v-pre</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;a v-bind:href=&quot;url&quot; v-pre&gt;&lt;!-- マスタッシュ{{}}やディレクティブがそのまま表示される --&gt;
+        <span v-pre>{{myLinkName}}</span>
+    &lt;/a&gt;
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <a v-bind:href="url" v-pre>
+                            {{myLinkName}}
+                        </a>
+                    </div>
+                </section>
+
+                <h3>v-once</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;a v-bind:href=&quot;myItem.href&quot; v-once&gt;&lt;!-- プロパティが変わっても更新されなくなる --&gt;
+        <span v-pre>{{myItem.name}}</span>
+    &lt;/a&gt;
+    &lt;input v-model=&quot;myItem.name&quot;&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myItem: {
+            href: 'https://www.google.com/?hl=ja',
+            name: 'myName',
+            target: '_blank',
+        },
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <a v-bind:href="myItem.href" v-once>
+                            {{myItem.name}}
+                        </a><br>
+                        <input v-model="myItem.name">
+                    </div>
+                </section>
+
+                <h3>v-text</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p&gt;<span v-pre>{{myMessage.value}}</span>&lt;/p&gt;&lt;!-- どちらも同じ表示になる --&gt;
+    &lt;p v-text=&quot;myMessage.value&quot;&gt;&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myMessage: {
+            value: 'Hello Vue.js!'
+        },
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <p>{{myMessage.value}}</p>
+                        <p v-text="myMessage.value"></p>
+                    </div>
+                </section>
+
+                <h3>v-html</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p&gt;hoge{{myHTML}}&lt;/p&gt;&lt;!-- 通常はXSS対策のためHTMLタグはエスケープされる --&gt;
+    &lt;p&gt;hoge&lt;span v-html=&quot;myHTML&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;!-- v-htmlでHTMLタグを有効にする --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myHTML: '<strong>fuga</strong>'
+    },
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <p>hoge{{myHTML}}</p>
+                        <p>hoge<span v-html="myHTML"></span></p>
+                    </div>
+                </section>
+
+                <h3>v-cloak</h3>
+                <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p v-cloak&gt;<span v-pre>{{myMessage.value}}</span>&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myMessage: {
+            value: 'Hello Vue.js!'
+        },
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1">
+    [v-cloak] {
+        display: none;  // v-cloak のついた要素は読込が完了するまで display: none; が適用
+    }
+</pre>
+                    <div class="demo"><p>実際の動作</p>
+                        <p v-cloak>{{myMessage.value}}</p>
+                    </div>
+                </section>
+                
+        </section>
+        </div>
+
+    <div id="myapp3">
+
+        <h1>CHAPTER3 イベントとフォーム入力の受け取り</h1>
+        <section>
+    
+        <h2>SECTION13 イベントハンドリング</h2>
+            <h3>メソッドイベントハンドラ</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;button v-on:click=&quot;myClick&quot;&gt;alertが出ます&lt;/button&gt;&lt;br&gt;&lt;!-- methods:myClick()を呼び出し --&gt;
+    &lt;button @click=&quot;myClick&quot;&gt;alertが出ます&lt;/button&gt;&lt;!-- v-on: は@で省略可 --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        myClick: function() {
+            alert('クリックしました')
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myClick">alertが出ます</button><br>
+                    <button @click="myClick">alertが出ます</button>
+                </div>
+            </section>
+    
+            <h3>インラインメソッドハンドラ</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+&lt;button v-on:click=&quot;myCount++&quot;&gt;myCountを増加&lt;/button&gt;<span v-pre>{{myCount}}</span>&lt;!-- Javascriptの式を記述できる --&gt;
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myCount++">myCountを増加</button>{{myCount}}
+                </div>
+            </section>
+    
+            <h3>フォーム入力の値</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input v-on:input=&quot;myHandleInput&quot;&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myMessage: '',
+    },
+    // アプリケーションで使用するメソッド
+    methods: {
+        myHandleInput: function(event) {
+            alert('入力した文字は '+event.target.value+' です')
+            this.myMessage = event.target.value
+        }
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-on:input="myHandleInput">
+                </div>
+            </section>
+
+            <h3>イベント修飾子 .stop</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;!-- 親要素のv-on:clickも発生 --&gt;
+    &lt;div v-on:click=&quot;myNestHandler(&#039;親div&#039;)&quot;&gt;&lt;button v-on:click=&quot;myNestHandler(&#039;.stopなしのbutton&#039;)&quot;&gt;.stopなし&lt;/button&gt;&lt;/div&gt;
+    &lt;!-- .stopで親要素のv-on:clickは発生しない --&gt;
+    &lt;div v-on:click=&quot;myNestHandler(&#039;親div&#039;)&quot;&gt;&lt;button v-on:click.stop=&quot;myNestHandler(&#039;.stopありのbutton1&#039;)&quot;&gt;.stopあり&lt;/button&gt;&lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        myNestHandler: function(comment) {
+            alert(comment+'をクリックしました')
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <div v-on:click="myNestHandler('親div')"><button v-on:click="myNestHandler('.stopなしのbutton')">.stopなし</button></div>
+                    <div v-on:click="myNestHandler('親div')"><button v-on:click.stop="myNestHandler('.stopありのbutton1')">.stopあり</button></div>
+                </div>
+            </section>
+
+            <h3>イベント修飾子 .capture</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;!-- 子要素のv-on:clickが先に発生 --&gt;
+    &lt;div v-on:click=&quot;myNestHandler(&#039;親div&#039;)&quot;&gt;
+        &lt;button v-on:click=&quot;myNestHandler(&#039;.button1&#039;)&quot;&gt;.captureなし&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;!-- .captureのついた要素のv-on:clickが先に発生 --&gt;
+    &lt;div v-on:click.capture=&quot;myNestHandler(&#039;親div&#039;)&quot;&gt;
+        &lt;button v-on:click=&quot;myNestHandler(&#039;button1&#039;)&quot;&gt;.captureあり&lt;/button&gt;
+    &lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        myNestHandler: function(comment) {
+            alert(comment+'をクリックしました')
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <div v-on:click="myNestHandler('親div')"><button v-on:click="myNestHandler('button1')">.captureなし</button></div>
+                    <div v-on:click.capture="myNestHandler('親div')"><button v-on:click="myNestHandler('button1')">.captureあり</button></div>
+                </div>
+            </section>
+
+
+            <h3>イベント修飾子 .prevent</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;!-- リンクの遷移やformのsubmitなどの処理をキャンセルする --&gt;
+    &lt;a href=&quot;https://www.google.com/?hl=ja&quot; v-on:click.right.prevent&gt;右クリック禁止&lt;/a&gt;
+</pre>
+                <div class="demo">実際の動作
+                    <a href="https://www.google.com/?hl=ja" v-on:click.right.prevent>右クリック禁止</a>
+                </div>
+            </section>
+
+            <h3>イベント修飾子 .self</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;!-- 通常、子要素をクリックすると親要素も反応する --&gt;
+    &lt;div v-on:click=&quot;myNestHandler(&#039;親div&#039;)&quot; class=&quot;parent&quot;&gt;親要素
+        &lt;p&gt;子要素&lt;/p&gt;
+    &lt;/div&gt;&lt;br&gt;
+    &lt;!-- .selfで子要素をクリックしても親要素が反応しない。モーダルウィンドウなどに --&gt;
+    &lt;div v-on:click.self=&quot;myNestHandler(&#039;親div&#039;)&quot; class=&quot;parent&quot;&gt;親要素
+        &lt;p&gt;子要素&lt;/p&gt;
+    &lt;/div&gt;</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        myNestHandler: function(comment) {
+            alert(comment+'をクリックしました')
+        },
+    },
+</pre>
+                <div class="demo"><P>実際の動作</P>
+                    <!-- 通常、子要素をクリックすると親要素も反応する -->
+                    <div v-on:click="myNestHandler('親div')" class="parent">親要素
+                        <p>子要素</p>
+                    </div><br>
+                    <!-- .selfで子要素をクリックしても親要素が反応しない。モーダルウィンドウなどに -->
+                    <div v-on:click.self="myNestHandler('親div')" class="parent">親要素
+                        <p>子要素</p>
+                    </div>
+                </div>
+            </section>
+
+            <h3>キー修飾子</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input v-on:keydown.enter=&quot;myEnterKeyHandler&quot;&gt;
+    <span v-pre>{{myEnterKey}}</span>
+    &lt;input v-on:keydown.up.down.left.right=&quot;myCursorKeyHandler&quot;&gt;
+    <span v-pre>{{myCursorKey}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myEnterKey: 'Enterキーを押すと表示が変わります',
+        myCursorKey: 'カーソルキーのいずれかを押すと表示が変わります',
+    },
+    methods: {
+        myEnterKeyHandler: function() {
+            this.myEnterKey = 'Enterキーが押されました'
+        },
+        myCursorKeyHandler: function() {
+            this.myCursorKey = 'カーソルキーが押されました'
+        },
+    }
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-on:keydown.enter="myEnterKeyHandler">
+                    {{myEnterKey}}<br>
+                    <input v-on:keydown.up.down.left.right="myCursorKeyHandler">
+                    {{myCursorKey}}
+                </div>
+            </section>
+
+            <h3>システム修飾子</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;button v-on:click.shift.ctrl=&quot;myShiftButton&quot;&gt;Shift+Ctrlを押しながらクリック&lt;/button&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:11">
+    methods: {
+        mySystemtButton: function() {
+            alert('Shift+Ctrlを押しながらクリックしました')
+        }
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click.shift.ctrl="mySystemButton">Shift+Ctrlを押しながらクリック</button>
+                </div>
+            </section>
+
+            <h2>SECTION14 フォーム入力バインディング</h2>
+            <h3>複数行テキスト</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;textarea v-model=&quot;myTextarea&quot;&gt;&lt;/textarea&gt;
+    <span v-pre>{{myTextarea}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myTextarea: '',
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <textarea v-model="myTextarea"></textarea>
+                    {{myTextarea}}
+                </div>
+            </section>
+
+            <h3>チェックボックス</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    (単一)
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myCheckbox&quot;&gt; <span v-pre>{{myCheckbox}}</span>&lt;br&gt;
+    (複数)
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myCheckboxes&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myCheckboxes&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myCheckboxes&quot; value=&quot;C&quot;&gt; <span v-pre>{{myCheckboxes}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myCheckbox: true,
+        myCheckboxes: ['B'],
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    (単一)
+                    <input type="checkbox" v-model="myCheckbox"> {{myCheckbox}}<br>
+                    (複数)
+                    <input type="checkbox" v-model="myCheckboxes" value="A">
+                    <input type="checkbox" v-model="myCheckboxes" value="B">
+                    <input type="checkbox" v-model="myCheckboxes" value="C"> {{myCheckboxes}}
+                </div>
+            </section>
+
+            <h3>ラジオボタン</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input type=&quot;radio&quot; v-model=&quot;myRadio&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myRadio&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myRadio&quot; value=&quot;C&quot;&gt; <span v-pre>{{myRadio}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myRadio: ['B'],
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input type="radio" v-model="myRadio" value="A">
+                    <input type="radio" v-model="myRadio" value="B">
+                    <input type="radio" v-model="myRadio" value="C"> {{myRadio}}
+                </div>
+            </section>
+
+            <h3>セレクトボックス</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;select v-model=&quot;mySelect&quot;&gt;
+        &lt;option disabled=&quot;disabled&quot;&gt;選択してください&lt;/option&gt;
+        &lt;option value=&quot;A&quot;&gt;A&lt;/option&gt;
+        &lt;option value=&quot;B&quot;&gt;B&lt;/option&gt;
+        &lt;option value=&quot;C&quot;&gt;C&lt;/option&gt;
+    &lt;/select&gt;
+    <span v-pre>{{mySelect}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        mySelect: [],
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <select v-model="mySelect" multiple>
+                        <option disabled="disabled">選択してください</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    {{mySelect}}
+                </div>
+            </section>
+
+            <h3>画像ファイル</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input type=&quot;file&quot; v-on:change=&quot;myImageHandle&quot;&gt;
+    &lt;div v-if=&quot;myImage&quot;&gt;
+        &lt;img v-bind:src=&quot;myImage&quot; width=&quot;500px&quot;&gt;
+    &lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myImage: '',
+    },
+    methods: {
+        myImageHandle: function(event) {
+            var file = event.target.files[0]
+            if(file && file.type.match(/^image\/(png|jpeg)$/)) {
+                this.myImage = window.URL.createObjectURL(file)
+            }
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input type="file" v-on:change="myImageHandle">
+                    <div v-if="myImage">
+                        <img v-bind:src="myImage" width="500px">
+                    </div>
+                </div>
+            </section>
+
+            <h3>カラーコード</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;input type=&quot;color&quot; v-model=&quot;myColor&quot;&gt; &lt;input v-model=&quot;myColor&quot;&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myColor: '#ff7800',
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input type="color" v-model="myColor"> <input v-model="myColor">
+                </div>
+            </section>
+
+            <h3>v-modelの修飾子 .lazy</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;input type=&quot;text&quot; v-model.lazy=&quot;myLazySync&quot;&gt;
+    <span v-pre>{{myLazySync}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myLazySync: 'フォーカスが外れたりエンターを押すと同期する',
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input type="text" v-model.lazy="myLazySync">
+                    {{myLazySync}}
+                </div>
+            </section>
+
+            <h3>v-modelの修飾子 .trim</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;textarea v-model.trim=&quot;myTrim&quot;&gt;&lt;/textarea&gt;
+    <span v-pre>{{myTrim}}</span>
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myTrim: '\n   文字列前後の改行や   複数半角Spaceを削除',
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <textarea v-model.trim="myTrim"></textarea>
+                    {{myTrim}}
+                </div>
+            </section>
+
+            <h2>SECTION15 マウント要素外のイベントと操作</h2>
+            <h3>スクロールイベントの取得</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;p&gt;現在のスクロール値は{{scrollY}}&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        mytimer: null,
+        scrollY: 0,
+    },
+    created: function() {
+        // ハンドラを登録
+        window.addEventListener('scroll',this.myScrollHandler)
+    },
+    beforeDestroy: function() {
+        // ハンドラを解除(不要になっても自動的に解除されないため)
+        window.removeEventListener('scroll',this.myScrollHandler)
+    },
+    methods: {
+        myScrollHandler: function() {
+            if(this.mytimer === null) {
+                this.mytimer = setTimeout(function() {
+                    this.scrollY = window.scrollY
+                    clearTimeout(this.mytimer)
+                    this.mytimer = null
+                }.bind(this), 200)  // 発生頻度の高いイベントは200msくらいの間隔で
+            }
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <p>現在のスクロール値は{{scrollY}}</p>
+                </div>
+            </section>
+
+        </section>
+    </div>
+
+    <div id="myapp4">
+
+        <h1>データの監視と加工</h1>
+        <section>
+            <h2>SECTION16 算出プロパティで処理を含むデータを作成する</h2>
+            <h3>算出プロパティの使い方</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10">
+    &lt;p&gt;半径 <span v-pre>{{myRadius}}</span> の円の周の長さは <span v-pre>{{myCircle.length}}</span>、<span v-pre>{{myCircle.area}}</span>&lt;/p&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3">
+    data: {
+        myRadius: 13,
+    },
+    computed: {
+        myCircle: function() {
+            return {
+                length: this.myRadius * 2 * 3.14,
+                area: Math.pow(this.myRadius, 2) * 3.14
+            }
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <p>半径 {{myRadius}} の円の周の長さは {{myCircle.length}}、面積は {{myCircle.area}}</p>
+                </div>
+            </section>
+        
+            <h3>ゲッターとセッター</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;input v-model.number=&quot;myData&quot;&gt;{{myData}}&lt;br&gt;
+    &lt;input v-model.number=&quot;myCalc&quot;&gt;{{myCalc}}
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myData: 100,
+    },
+    computed: {
+        myCalc: {
+            get: function() {
+                // myDataの値を受け取ってmyCalcとして加工して返す
+                return this.myData / 2
+            },
+            set: function(val) {
+                // myCalcの値を受け取ってmyDataとして加工して返す。getとsetで双方向にデータのやり取りができる
+                this.myData = val * 2
+            },
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-model.number="myData">{{myData}}<br>
+                    <input v-model.number="myCalc">{{myCalc}}
+                </div>
+            </section>
+
+            <h3>キャッシュ機能 …メソッドとの大きな違い</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;ol&gt;
+        &lt;li&gt;{{myComputedData}}&lt;/li&gt;
+        &lt;li&gt;{{myComputedData}}&lt;/li&gt;&lt;!-- 同じ値が算出される(キャッシュされる) --&gt;
+    &lt;/ol&gt;
+    &lt;ol&gt;
+        &lt;li&gt;{{myMethodsData()}}&lt;/li&gt;
+        &lt;li&gt;{{myMethodsData()}}&lt;/li&gt;&lt;!-- 毎回違う値が算出される --&gt;
+    &lt;/ol&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    methods: {
+        myMethodsData: function() {
+            return Math.random()
+        },
+    },
+    computed: {
+        myComputedData: function() {
+            return Math.random()
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <ol>
+                        <li>{{myComputedData}}</li>
+                        <li>{{myComputedData}}</li><!-- 同じ値が算出される(キャッシュされる) -->
+                    </ol>
+                    <ol>
+                        <li>{{myMethodsData()}}</li>
+                        <li>{{myMethodsData()}}</li><!-- 毎回違う値が算出される -->
+                    </ol>
+                </div>
+            </section>
+
+            <h3>リストの絞り込みに利用しよう</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;!-- Lodashライブラリを読み込む --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;input v-model.number=&quot;myLimitPrice&quot;&gt;円以下に絞り込む 
+    &lt;input v-model.number=&quot;myLimitItem&quot;&gt;件を表示
+    &lt;button v-on:click=&quot;myOrder=!myOrder&quot;&gt;ソート切替&lt;/button&gt;
+    &lt;p&gt;{{myMatched.length}}件中{{myLimited.length}}件を表示中&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;item in myLimited&quot; v-bind:key=&quot;myItems.id&quot;&gt;
+            {{ item.name }} {{ item.price }}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myLimitPrice: 300,
+        myLimitItem: 3,
+        myItems: [
+            { id: 1, name: 'りんご', price: 100 },
+            { id: 2, name: 'ばなな', price: 200 },
+            { id: 3, name: 'いちご', price: 300 },
+            { id: 4, name: 'オレンジ', price: 400 },
+            { id: 5, name: 'メロン', price: 500 },
+        ],
+    },
+    computed: {
+        myMatched: function() {
+            // myLimitPrice円以下のリストを返す
+            return this.myItems.filter(function(el) {
+                return el.price <= this.myLimitPrice
+            }, this)
+        },
+        mySorted:function() {
+            return _.orderBy(this.myMatched, 'price', this.myOrder ? 'desc' : 'asc')
+        },
+        myLimited: function() {
+            // myMatchedで絞ったデータの0番目からmyLimitItem番目まで
+            return this.mySorted.slice(0, this.myLimitItem)
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-model.number="myLimitPrice">円以下に絞り込む 
+                    <input v-model.number="myLimitItem">件を表示
+                    <button v-on:click="myOrder=!myOrder">ソート切替</button>
+                    <p>{{myMatched.length}}件中{{myLimited.length}}件を表示中</p>
+                    <ul>
+                        <li v-for="item in myLimited" v-bind:key="myItems.id">
+                            {{ item.name }} {{ item.price }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <h2>SECTION17 ウォッチャでデータを監視して処理を自動化する</h2>
+            <h3>ウォッチャの使い方</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;input v-model=&quot;myMonitored&quot;&gt;
+    {{myChangedLog}}
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myMonitored: 100,
+        myNewVal: 0,
+        myOldVal: 0,
+        myChangedLog: 'inputの変化を監視しています',
+    },
+    watch: {
+        myMonitored: {
+            // myMonitoredが変化したときに行う処理
+            handler: function(myNewVal, myOldVal) {
+                this.myChangedLog = myOldVal+'が'+myNewVal+'に変更されました'
+            },
+            // ネストされたオブジェクトも監視するか
+            deep: true,
+            // 初期読み込み時にも呼び出すか
+            immediate: false,
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-model="myMonitored">
+                    {{myChangedLog}}
+                </div>
+            </section>
+
+            <h3>フォームを監視してAPIからデータを取得</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;select v-model=&quot;myCurrent&quot;&gt;
+        &lt;option v-for=&quot;topic in myTopics&quot; v-bind:value=&quot;topic.value&quot;&gt;
+            {{ topic.name }}
+        &lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div v-for=&quot;item in myList&quot;&gt;{{ item.full_name }}&lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myList: [],
+        myCurrent: '',
+        myTopics: [
+            { value: 'vue', name: 'Vue.js' },
+            { value: 'jQuery', name: 'jQuery' }
+        ],
+    },
+    watch: {
+        myCurrent: function (val) {
+            // GitHubのAPIからトピックのリポジトリを検索
+            axios.get('https://api.github.com/search/repositories', {
+                params: {
+                    q: 'topic:' + val
+                }
+            }).then(function (response) {
+              this.myList = response.data.items
+            }.bind(this))
+        }
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <select v-model="myCurrent">
+                        <option v-for="topic in myTopics" v-bind:value="topic.value">
+                            {{ topic.name }}
+                        </option>
+                    </select>
+                    <div v-for="item in myList">{{ item.full_name }}</div>
+                </div>
+            </section>
+
+            <h2>SECTION18 フィルタでテキストの変換処理を行う</h2>
+            <h3>フィルタの使い方</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    {{ myFilteredData | myFilter }}
+    &lt;div v-bind:id=&quot;myFilteredData | myFilter&quot;&gt;&lt;/div&gt;&lt;!-- 属性値に設定する場合 --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myFilteredData: 19800,
+    },
+    filters: {
+        myFilter: function (val) {
+            // カンマ区切りした数に変換
+            return val.toLocaleString()
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    {{ myFilteredData | myFilter }}
+                    <div v-bind:id="myFilteredData | myFilter"></div><!-- 属性値に設定する場合 -->
+                </div>
+            </section>
+
+            <h3>複数のフィルタをつなげて使う</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;input v-model=&quot;myAngle&quot;&gt; 度は {{ myAngle | radian | round }} ラジアンだよ
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myAngle: 180,
+    },
+    filters: {
+        // 度からラジアンに変換するフィルタ
+        radian: function (val) {
+            return val * Math.PI / 180
+        },
+        // 小数点以下を第2位に丸めるフィルタ
+        round: function (val) {
+            return Math.round(val * 100) / 100
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <input v-model="myAngle"> 度は {{ myAngle | radian | round }} ラジアンだよ
+                </div>
+            </section>
+        
+        </section>
+        </div>
+
+    <div id="myapp5">
+
+        <h1>コンポーネントでUI部品を作る</h1>
+        <section>
+            <h2>SECTION22 コンポーネントの定義方法</h2>
+            <h3>コンポーネントの登録</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;div id=&quot;myapp&quot;&gt;
+        &lt;my-component&gt;&lt;/my-component&gt;
+    &lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1" v-pre>
+// コンポーネントはnew Vueの前に記述
+// どの部品からでも呼び出せる
+Vue.component('my-component', {
+    template: '&lt;p&gt;{{ myMessage }}&lt;/p&gt;',
+    // dataはオブジェクトを返す変数にする
+    data: function() {
+        return {
+            myMessage: 'This is my component',
+        }
+    },
+})
+
+var myapp = new Vue({
+    // マウントする要素
+    el: '#myapp',
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <my-component></my-component>
+                </div>
+            </section>
+
+            <h3>コンポーネントを複数回使用したときの挙動</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;my-random-number&gt;&lt;/my-random-number&gt;
+    &lt;my-random-number&gt;&lt;/my-random-number&gt;
+    &lt;my-random-number&gt;&lt;/my-random-number&gt; &lt;!-- 呼び出すごとに別々のインスタンスとして扱われる --&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1" v-pre>
+Vue.component('my-random-number', {
+    template: '&lt;p&gt;{{ myRandNum }}&lt;/p&gt;',
+    data: function() {
+        return {
+            myRandNum: Math.random(),
+        }
+    },
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <my-random-number></my-random-number>
+                    <my-random-number></my-random-number>
+                    <my-random-number></my-random-number> <!-- 呼び出すごとに別々のインスタンスとして扱われる -->
+                </div>
+            </section>
+
+            <h2>コンポーネント間の通信</h2>
+            <h3>親から子へデータを渡す props</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;!-- 親側のテンプレート --&gt;
+    &lt;my-compo-child myval=&quot;子A&quot;&gt;&lt;/my-compo-child&gt;
+    &lt;my-compo-child myval=&quot;子B&quot;&gt;&lt;/my-compo-child&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1" v-pre>
+// 子のコンポーネント
+Vue.component(&#039;my-compo-child&#039;, {
+    template: &#039;&lt;p&gt;{{ myval }}&lt;/p&gt;&#039;,
+    // 受け取る属性名を指定
+    props: [&#039;myval&#039;],
+})
+// ※propsはリアクティブな状態で受け取るため、親側でデータを更新すると同期される
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <!-- 親側のテンプレート -->
+                    <my-compo-child myval="子A"></my-compo-child>
+                    <my-compo-child myval="子B"></my-compo-child>
+                </div>
+            </section>
+
+            <h3>属性の上書き</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;!-- idは親のidが優先で上書き，classは子のclassを追加。値は子が優先 --&gt;
+    &lt;my-over-ride id=&quot;parentid&quot; class=&quot;parentclass&quot;&gt;This is ParentTemplate&lt;/my-over-ride&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1" v-pre>
+Vue.component('my-over-ride', {
+    template: &#039;&lt;p id=&quot;childid&quot; class=&quot;childclass&quot;&gt;This is ChildComponent&lt;/p&gt;&#039;,
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <!-- idは親のidが優先で上書き，classは子のclassを追加。値は子が優先 -->
+                    <my-over-ride id="parentid" class="parentclass">This is ParentTemplate</my-over-ride>
+                    &lt;p id=&quot;parentid&quot; class=&quot;childclass parenclass&quot;&gt;This is ChildComponent&lt;/p&gt;
+                </div>
+            </section>
+
+            <h3>子から親へデータを渡す $emit</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;my-event-up v-on:my-childs-event=&quot;myParentMethod&quot;&gt;&lt;/my-event-up&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+// 子コンポーネント
+Vue.component('my-event-up', {
+    template: &#039;&lt;button v-on:click=&quot;myClick&quot;&gt;子のボタン&lt;/button&gt;&#039;,
+    methods: {
+        myClick: function() {
+            this.$emit('my-childs-event')
+        },
+    },
+})
+// 親テンプレート
+var myapp = new Vue({
+    el: '#myapp5',
+    methods: {
+        myParentMethod: function() {
+            alert('親のメソッドを実行')
+        }
+    },
+})
+// 子のbuttonを押すと
+// myClickメソッドを呼び出し
+// 親へmy-childs-eventを$emitで渡す
+// 親はmy-childs-eventを受け取ると
+// myParentMethodを実行する
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <my-event-up v-on:my-childs-event="myParentMethod"></my-event-up>
+                </div>
+            </section>
+
+            <h2>SECTION24 スロットを使ったコンポーネントのカスタマイズ</h2>
+            <h3>デフォルトスロット</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;my-tag&gt;HTMLタグをコンポーネントで追加&lt;/my-tag&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:1" v-pre>
+// &lt;slot&gt;&lt;/slot&gt;の内側に親のコンテンツを展開
+Vue.component(&#039;my-tag&#039;, {
+    template: &#039;&lt;h3&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/h3&gt;&#039;,
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <my-tag>HTMLタグをコンポーネントで追加</my-tag>
+                </div>
+            </section>
+
+            <h3>名前付きスロット</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;my-named-slot&gt;
+        &lt;template slot=&quot;my-head3&quot;&gt;Hello, Vue.js!&lt;/template&gt;
+        &lt;template slot=&quot;my-head4&quot;&gt;&lt;/template&gt; &lt;!-- 囲むタグはpでもspanでも何でもOK --&gt;
+    &lt;/my-named-slot&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+Vue.component(&#039;my-named-slot&#039;, {
+    template:   &#039;&lt;div&gt;&#039;+    // ※template は兄弟要素だけ書けないのでdivなどで囲む
+                    &#039;&lt;h3&gt;&lt;slot name=&quot;my-head3&quot;&gt;デフォルト値&lt;/slot&gt;&lt;/h3&gt;&#039;+
+                    &#039;&lt;h4&gt;&lt;slot name=&quot;my-head4&quot;&gt;デフォルト値&lt;slot&gt;&lt;/h4&gt;&#039;+
+                &#039;&lt;/div&gt;&#039;
+});
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <my-named-slot>
+                        <template slot="my-head3">Hello, Vue.js!</template>
+                        <template slot="my-head4"></template> <!-- 囲むタグはpでもspanでも何でもOK -->
+                    </my-named-slot>
+                </div>
+            </section>
+
+            <h2>SECTION26 テンプレートの定義方法</h2>
+            <h3>コンポーネントの命名規則</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;my-component&gt;&lt;/my-component&gt; &lt;!-- OK (ケバブケース) --&gt;
+    &lt;myComponent&gt;&lt;/myComponent&gt; &lt;!-- NG (キャメルケース) --&gt;
+
+    &lt;table&gt;
+        &lt;my-row&gt;...&lt;/my-row&gt; &lt;!-- HTML解析時に無効なコンテンツとして削除される --&gt;
+        &lt;tr is=&quot;my-row&quot;&gt;&lt;/tr&gt; &lt;!-- OK --&gt;
+    &lt;/table&gt;
+    &lt;select&gt;
+        &lt;my-option&gt;...&lt;/my-option&gt; &lt;!-- HTML解析時に無効なコンテンツとして削除される --&gt;
+        &lt;option is=&quot;my-option&quot;&gt;&lt;/option&gt; &lt;!-- OK --&gt;
+    &lt;/select&gt;
+</pre>
+            </section>
+
+            <h2>SECTION27 そのほかの機能やオプション</h2>
+            <h3>動的コンポーネント</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;!-- XOR(排他的論理和)で0と1をトグル --&gt;
+    &lt;button v-on:click=&quot;myToggle^=1&quot;&gt;toggle&lt;/button&gt;
+    &lt;div v-bind:is=&quot;component&quot;&gt;&lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+Vue.component(&#039;my-component-a&#039;, {
+    template: &#039;&lt;h3&gt;component-a&lt;/h3&gt;&#039;
+})
+Vue.component(&#039;my-component-b&#039;, {
+    template: &#039;&lt;h4&gt;component-b&lt;/h4&gt;&#039;
+})
+var myapp5 = new Vue({
+    el: &#039;#myapp&#039;,
+    data: {
+        myComponentType: [&#039;my-component-a&#039;, &#039;my-component-b&#039;],
+        myToggle: 0,
+    },
+    computed: {
+        component: function() {
+            // myToggleの値でコンポーネントを選択
+            return this.myComponentType[this.myToggle]
+        }
+    },
+})
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <!-- XOR(排他的論理和)で0と1をトグル -->
+                    <button v-on:click="myToggle^=1">toggle</button>
+                    <div v-bind:is="component"></div>
+                </div>
+            </section>
+
+            <h3>keep-alive で状態を維持する</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;mycurrent=&#039;my-compo-board&#039;&quot;&gt;メッセージ一覧&lt;/button&gt;
+    &lt;button v-on:click=&quot;mycurrent=&#039;my-compo-form&#039;&quot;&gt;投稿フォーム&lt;/button&gt;
+    &lt;div v-bind:is=&quot;mycurrent&quot;&gt;通常は切替でフォームなどの変更が維持されない&lt;/div&gt;
+    &lt;keep-alive&gt;
+        &lt;div v-bind:is=&quot;mycurrent&quot;&gt;keep-aliveで囲むと変更が維持される&lt;/div&gt;
+    &lt;/keep-alive&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+Vue.component(&#039;my-compo-board&#039;, {
+    template: &#039;&lt;div&gt;Message Board&lt;/div&gt;&#039;
+})
+Vue.component(&#039;my-compo-form&#039;, {
+    template: &#039;&lt;div&gt;&lt;textarea v-model=&quot;myTextarea&quot;&gt;&lt;/textarea&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;&#039;,
+    data: function() {
+        return {myTextarea: &#039;投稿内容&#039;}
+    }
+})
+var myapp = new Vue({
+    el: '#myapp',
+    // アプリケーションで使用するデータ
+    data: {
+        mycurrent: 'my-compo-form',
+    },
+})
+    
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="mycurrent='my-compo-board'">メッセージ一覧</button>
+                    <button v-on:click="mycurrent='my-compo-form'">投稿フォーム</button>
+                    <div v-bind:is="mycurrent">通常は切替でフォームなどの変更が維持されない</div>
+                    <keep-alive>
+                        <div v-bind:is="mycurrent">keep-aliveで囲むと変更が維持される</div>
+                    </keep-alive>
+                </div>
+            </section>
+
+        </section>
+    </div>
+
+    <div id="myapp6">
+
+        <h1>トランジションとアニメーション</h1>
+        <section>
+            <h2>SECTION28 トランジションとは </h2>
+            <h3>スタイルを定義して動かしてみよう</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;myToggle=!myToggle&quot;&gt;切替&lt;/button&gt;
+    &lt;!-- name属性の値がCSSのclassの接頭辞になる --&gt;
+    &lt;!-- appear をつけると初期描画時にもトランジションを行う --&gt;
+    &lt;transition name=&quot;my-trnstn&quot; appear&gt;
+        &lt;div v-show=&quot;myToggle&quot;&gt;トランジションさせたい要素&lt;/div&gt;
+    &lt;/transition&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myToggle: true,
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1" v-pre>
+/* my-trnstnが接頭辞。-active はトランジション/アニメーションの開始から終了するまで定義される*/
+.my-trnstn-enter-active, .my-trnstn-leave-active {
+    transition: opacity 1s;
+}
+/* -enter（-leave）は要素が追加（削除）される直前に定義され，1フレーム後に削除*/
+/* -enter-to（-leave-to）は-enter（-leave）が削除された後に定義され，トランジション/アニメーションが終了すると削除される*/
+.my-trnstn-enter, .my-trnstn-leave-to {
+    opacity: 0;
+}
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myToggle=!myToggle">切替</button>
+                    <!-- name属性の値がCSSのclassの接頭辞になる -->
+                    <!-- appear をつけると初期描画時にもトランジションを行う -->
+                    <transition name="my-trnstn" appear>
+                        <div v-show="myToggle">トランジションさせたい要素</div>
+                    </transition>
+                </div>
+            </section>
+
+            <h2>SECTION29 単一要素トランジション</h2>
+            <h3>EnterとLeaveで別々のスタイルを定義する</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;myToggle2=!myToggle2&quot;&gt;切替&lt;/button&gt;
+    &lt;transition name=&quot;my-trnstn2&quot; appear&gt;
+        &lt;div v-show=&quot;myToggle2&quot;&gt;トランジションさせたい要素&lt;/div&gt;
+    &lt;/transition&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myToggle2: true,
+    },
+</pre>
+<pre class="prettyprint linenums:1" v-pre>
+.my-trnstn2-enter-active, .my-trnstn2-leave-active {
+    transition: opacity 1s, transform 1s;
+}
+.my-trnstn2-enter{
+    opacity: 0;
+    transform: translateX(100px);
+}
+.my-trnstn2-leave-to {
+    opacity: 0;
+    transform: translateY(50px);
+}
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myToggle2=!myToggle2">切替</button>
+                    <transition name="my-trnstn2" appear>
+                        <div v-show="myToggle2">トランジションさせたい要素</div>
+                    </transition>
+                </div>
+            </section>
+
+            <h3>複数の要素をグループ化する</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;transition name=&quot;my-trnstn&quot; appear&gt;
+    &lt;!-- transitionの中は1つの要素しか書けないが、条件分岐で結果が要素1つならOK --&gt;
+        &lt;div v-if=&quot;myType === &#039;A&#039;&quot; key=&quot;a&quot;&gt;Aの要素を表示&lt;/div&gt;
+        &lt;div v-else-if=&quot;myType === &#039;B&#039;&quot; key=&quot;b&quot;&gt;Bの要素を表示&lt;/div&gt;
+        &lt;div v-else key=&quot;c&quot;&gt;Cの要素を表示&lt;/div&gt;
+    &lt;/transition&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType&quot; value=&quot;C&quot;&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myType: "B",
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <transition name="my-trnstn" appear>
+                        <!-- transitionの中は1つの要素しか書けないが、条件分岐で結果が要素1つならOK -->
+                        <div v-if="myType === 'A'" key="a">Aの要素を表示</div>
+                        <div v-else-if="myType === 'B'" key="b">Bの要素を表示</div>
+                        <div v-else key="c">Cの要素を表示</div>
+                    </transition>
+                    <input type="radio" v-model="myType" value="A">
+                    <input type="radio" v-model="myType" value="B">
+                    <input type="radio" v-model="myType" value="C">
+                </div>
+            </section>
+
+            <h3>EnterとLeaveのタイミングを変更する</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;transition name=&quot;my-trnstn&quot; mode=&quot;out-in&quot;&gt;
+    &lt;!-- transitionの中は1つの要素しか書けないが、条件分岐で結果が要素1つならOK --&gt;
+        &lt;div v-if=&quot;myType2 === &#039;A&#039;&quot; key=&quot;a&quot;&gt;Aの要素を表示&lt;/div&gt;
+        &lt;div v-else-if=&quot;myType2 === &#039;B&#039;&quot; key=&quot;b&quot;&gt;Bの要素を表示&lt;/div&gt;
+        &lt;div v-else key=&quot;c&quot;&gt;Cの要素を表示&lt;/div&gt;
+    &lt;/transition&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType2&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType2&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myType2&quot; value=&quot;C&quot;&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myType: "B",
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <!-- mode="out-in"でLeaveトランジションが終わってからEnterトランジションを開始する -->
+                    <!-- → 消える途中と現れる途中が同時に表示されないからカクっとしない！ -->
+                    <transition name="my-trnstn" mode="out-in">
+                        <div v-if="myType2 === 'A'" key="a">Aの要素を表示</div>
+                        <div v-else-if="myType2 === 'B'" key="b">Bの要素を表示</div>
+                        <div v-else key="c">Cの要素を表示</div>
+                    </transition>
+                    <input type="radio" v-model="myType2" value="A">
+                    <input type="radio" v-model="myType2" value="B">
+                    <input type="radio" v-model="myType2" value="C">
+                </div>
+            </section>
+
+            <h3>キーの変化によるトランジションの発動</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;myCount++&quot;&gt;カウントを増加&lt;/button&gt;
+    &lt;transition&gt;
+        &lt;!-- keyの値が変化するとトランジションが発動 --&gt;
+        &lt;div v-bind:key=&quot;myCount&quot;&gt;{{myCount}}&lt;/div&gt;
+    &lt;/transition&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myCount: 0,
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1" v-pre>
+.v-enter-active, .v-leave-active {
+    transition: opacity 1s;
+}
+.v-leave-active {
+    position: absolute;
+}
+.v-enter, .v-leave-to {
+    opacity: 0;
+}
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myCount++">カウントを増加</button>
+                    <transition>
+                        <!-- keyの値が変化するとトランジションが発動 -->
+                        <div v-bind:key="myCount">{{myCount}}</div>
+                    </transition>
+                </div>
+            </section>
+
+            <h2>SECTION30 リストトランジション</h2>
+            <h3></h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;myOrder=!myOrder&quot;&gt;並び変え&lt;/button&gt;
+    &lt;!-- &lt;ul&gt;の代わりにtag=&quot;ul&quot;をつけたtransition-groupにする --&gt;
+    &lt;transition-group tag=&quot;ul&quot;&gt;
+        &lt;li v-for=&quot;item in mySortedList&quot; v-bind:key=&quot;item.id&quot;&gt;
+            ID: {{ item.id }}, name: {{ item.name }}, score: {{ item.score }}
+        &lt;/li&gt;
+    &lt;/transition-group&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myOrder: false,
+        myGoodsList: [
+            {id: 1, name: 'hoge', score: 100 },
+            {id: 2, name: 'fuga', score: 200 },
+            {id: 3, name: 'piyo', score: 500 },
+            {id: 4, name: 'foo', score: 9000 },
+            {id: 5, name: 'bar', score: 1200 },
+        ],
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1" v-pre>
+/* 追加・削除・並び変えで順番が動いたときに付与される */
+/* flexboxやinline-blockで改行された要素の、X座標とY座標どちらの動きにも対応 */
+.v-move {
+    transition: transform 2s;
+}
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myOrder=!myOrder">並び変え</button>
+                    <!-- <ul>の代わりにtag="ul"をつけたtransition-groupにする -->
+                    <transition-group tag="ul">
+                        <li v-for="item in mySortedList" v-bind:key="item.id">
+                            ID: {{ item.id }}, name: {{ item.name }}, score: {{ item.score }}
+                        </li>
+                    </transition-group>
+                </div>
+            </section>
+
+            <h2>SECTION31 </h2>
+            <h3>SVGのトランジション</h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;button v-on:click=&quot;myChangeSVG=!myChangeSVG&quot;&gt;切替&lt;/button&gt;
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+        &lt;transition&gt;
+            &lt;!-- keyの変化でSVGがなめらかにトランジション --&gt;
+            &lt;circle cx=&quot;80&quot; cy=&quot;75&quot; v-bind=&quot;myItem&quot; v-bind:key=&quot;myChangeSVG&quot;/&gt;
+        &lt;/transition&gt;
+    &lt;/svg&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myChangeSVG: false,
+        myCircleT: {
+            r: 50,
+            fill: 'red',
+        },
+        myCircleF: {
+            r: 70,
+            fill: 'skyblue',
+        },
+    },
+</pre>
+<h6 class="pre-kind">style.css</h6>
+<pre class="prettyprint linenums:1" v-pre>
+    .v-enter-active, .v-leave-active {
+        transition: opacity 1s;
+    }
+    .v-leave-active {
+        position: absolute;
+    }
+    .v-enter, .v-leave-to {
+        opacity: 0;
+    }
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myChangeSVG=!myChangeSVG">切替</button>
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                        <transition>
+                            <!-- keyの変化でSVGがなめらかにトランジション -->
+                            <circle cx="80" cy="75" v-bind="myItem" v-bind:key="myChangeSVG"/>
+                        </transition>
+                    </svg>
+                </div>
+            </section>
+
+            <h2>SECTION32 トランジションフック</h2>
+            <h3></h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+    &lt;div class=&quot;demo&quot;&gt;&lt;p&gt;実際の動作&lt;/p&gt;
+    &lt;!-- イベントフックとしてenter，after-enterを設定 --&gt;
+    &lt;transition v-on:enter=&quot;myEnter&quot; v-on:after-enter=&quot;myAftEnter&quot;&gt;
+        &lt;div v-if=&quot;myShowFlag&quot;&gt;example&lt;/div&gt;
+    &lt;/transition&gt;
+    &lt;!-- 使用できるイベントフック
+    ・before-enter
+    ・enter
+    ・after-enter
+    ・enter-cancelled
+    ・before-leave
+    ・leave
+    ・after-leave
+    ・leave-cancelled --&gt;
+&lt;/div&gt;
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+    data: {
+        myShowFlag: false,
+    },
+    methods: {
+        myEnter: function(el done) {
+            // .v-enter が付与され、DOMに要素が追加された後の処理
+            console.log('トランジション開始')
+            setTimeout(done, 1000)  // 1000ms後にmyEnterを終了してafter-enterに遷移
+        },
+        myAftEnter: function(el) {
+            // トランジションが終わる、またはenterでdone()した後の処理
+            console.log('トランジション終了')
+        },
+    },
+</pre>
+                <div class="demo"><p>実際の動作</p>
+                    <button v-on:click="myShowFlag=!myShowFlag">コンソールログに開始と終了を合図</button>
+                    <!-- イベントフックとしてenter，after-enterを設定 -->
+                    <transition v-on:enter="myEnter" v-on:after-enter="myAftEnter">
+                        <div v-if="myShowFlag">example</div>
+                    </transition>
+                    <!-- 使用できるイベントフック
+                    ・before-enter
+                    ・enter
+                    ・after-enter
+                    ・enter-cancelled
+                    ・before-leave
+                    ・leave
+                    ・after-leave
+                    ・leave-cancelled -->
+                </div>
+            </section>
+
+        </section>
+    </div>
+
+    <div id="myapp7">
+
+        <h1>より大規模なアプリケーション開発</h1>
+        <section>
+            <h2>SECTION35 単一ファイルコンポーネント(SFC)</h2>
+            <h3></h3>
+            <section>
+<h6 class="pre-kind">index.html</h6>
+<pre class="prettyprint linenums:10" v-pre>
+
+</pre>
+<h6 class="pre-kind">main.js</h6>
+<pre class="prettyprint linenums:3" v-pre>
+
+</pre>
+<h6 class="pre-kind">myExample.vue</h6>
+<pre class="prettyprint linenums:1" v-pre>
+
+</pre>
+                <div class="demo"><p>実際の動作</p>
+
+                </div>
+            </section>
+
+        </section>
+    </div>
+
+
+    <div id="sidebar">
+        <ul>
+            <li class="done"><a href="#myapp1">CHAPTER 1</a></li>
+            <li class="done"><a href="#myapp2">CHAPTER 2</a></li>
+            <li class="done"><a href="#myapp3">CHAPTER 3</a></li>
+            <li class="done"><a href="#myapp4">CHAPTER 4</a></li>
+            <li class="done"><a href="#myapp5">CHAPTER 5</a></li>
+            <li class="done"><a href="#myapp6">CHAPTER 6</a></li>
+            <li class=""><a href="#myapp7">CHAPTER 7</a></li>
+            <li class=""><a href="#myapp8">CHAPTER 8</a></li>
+            <li class=""><a href="#myapp9">CHAPTER 9</a></li>
+        </ul>
+    </div>
+
+    <!-- Vue.jsのインストール -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+
+    <!-- シンタックスハイライト -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+    <script src="main.js"></script>
+</body>
+</html>

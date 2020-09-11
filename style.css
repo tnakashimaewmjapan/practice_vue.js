@@ -1,0 +1,138 @@
+.v-enter-active, .v-leave-active {
+    transition: opacity 1s;
+}
+.v-leave-active {
+    position: absolute;
+}
+.v-enter, .v-leave-to {
+    opacity: 0;
+}
+/* 追加・削除・並び変えで順番が動いたときに付与される */
+.v-move {
+    transition: transform 2s;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.parent {
+    width: 128px;
+    height: 72px;
+    background-color: #888;
+    text-align: center;
+    vertical-align: middle;
+}
+.parent p {
+    width: 64px;
+    height: 36px;
+    background-color: #fff;
+    margin: auto;
+}
+
+/* my-trnstnが接頭辞。-active はトランジション/アニメーションの開始から終了するまで定義される*/
+.my-trnstn-enter-active, .my-trnstn-leave-active {
+    transition: opacity 1s;
+}
+/* -enter（-leave）は要素が追加（削除）される直前に定義され，1フレーム後に削除*/
+/* -enter-to（-leave-to）は-enter（-leave）が削除された後に定義され，トランジション/アニメーションが終了すると削除される*/
+.my-trnstn-enter, .my-trnstn-leave-to {
+    opacity: 0;
+}
+
+.my-trnstn2-enter-active, .my-trnstn2-leave-active {
+    transition: opacity 1s, transform 1s;
+}
+.my-trnstn2-enter{
+    opacity: 0;
+    transform: translateX(100px);
+}
+.my-trnstn2-leave-to {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+
+
+
+
+
+
+/******************************************************************/
+body {
+    position: relative;
+    padding-bottom: 100px;
+    padding-left: 150px;
+    max-width: 960px;
+    color: #444;
+}
+h1 {
+    border-top: 5px dashed #888;
+    border-left: 5px solid #888;
+    padding-left: 5px;
+}
+h2 {
+    margin-top: 2em;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+}
+h6 {
+    margin: 0;
+    padding: 0 5px;
+    background-color: #888;
+    border: 1px solid #000;
+}
+section {
+    margin-left: 4em;
+    margin-bottom: 4em;
+}
+
+.demo {
+    background-color: pink;
+    padding: 1em;
+    border: 1px solid purple;
+}
+
+#sidebar {
+    position: fixed;
+    width: 160px;
+    height: 100%;
+    margin:-16px -40px;
+    top: 0;
+    left: 0;
+}
+#sidebar ul {
+    list-style: none;
+    text-decoration: none;
+    height: 100%;
+}
+#sidebar ul li {
+    display: block;
+    border-bottom: 1px solid #444;
+    padding-left: 10px;
+    height: calc(100% / 9);
+}
+#sidebar ul li.done:hover {
+    background-color: #ddd;
+    transition: 0.5s;
+}
+#sidebar a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #444;
+}
+
+
+
+pre {
+    font-family:'Source Code Pro';
+    font-size: 0.8em;
+    margin-top: 0;
+    line-height: 1.5em;
+}
+pre.prettyprint {
+    white-space: pre;
+    overflow: auto;
+}
